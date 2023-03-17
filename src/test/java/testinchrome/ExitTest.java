@@ -16,6 +16,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.concurrent.TimeUnit;
+
+import static property.Property.driverPath;
+import static property.Property.url;
+
 public class ExitTest {
     private WebDriver driver;
     Faker faker = new Faker();
@@ -27,17 +32,17 @@ public class ExitTest {
 
     @Before
     public void setUp() {
-        //драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.chrome,driver", driverPath);
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
     @DisplayName("Проверка выхода из аккаунта")
     public void loginFromRecoverPasswordTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);

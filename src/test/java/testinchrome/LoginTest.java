@@ -13,6 +13,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.concurrent.TimeUnit;
+
+import static property.Property.driverPath;
+import static property.Property.url;
+
 public class LoginTest {
     private WebDriver driver;
     Faker faker = new Faker();
@@ -24,17 +29,17 @@ public class LoginTest {
 
     @Before
     public void setUp() {
-        //драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.chrome,driver", driverPath);
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
     @DisplayName("Проверка входа по кнопке «Войти в аккаунт» на главной")
     public void loginToAccountButtonLoginTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -68,7 +73,7 @@ public class LoginTest {
     @DisplayName("Проверка входа через кнопку «Личный кабинет»")
     public void personalAreaButtonLoginTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -102,7 +107,7 @@ public class LoginTest {
     @DisplayName("Проверка входа через кнопку в форме регистрации")
     public void loginFromRegistrationTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -141,7 +146,7 @@ public class LoginTest {
     @DisplayName("Проверка входа через кнопку в форме восстановления пароля")
     public void loginFromRecoverPasswordTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);

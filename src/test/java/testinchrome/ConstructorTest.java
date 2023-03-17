@@ -2,6 +2,7 @@ package testinchrome;
 
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Before;
+import org.openqa.selenium.chrome.ChromeDriver;
 import pageobject.AccountProfilePage;
 import pageobject.LoginPage;
 import pageobject.MainPage;
@@ -12,8 +13,11 @@ import com.github.javafaker.Faker;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.concurrent.TimeUnit;
+
+import static property.Property.driverPath;
+import static property.Property.url;
 
 public class ConstructorTest {
     private WebDriver driver;
@@ -26,17 +30,17 @@ public class ConstructorTest {
 
     @Before
     public void setUp() {
-        //драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.chrome,driver", driverPath);
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
     @DisplayName("Проверка перехода из личного кабинета в конструктор по клику на конструктор")
     public void goToConstructorFromConstructorButtonTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -73,7 +77,7 @@ public class ConstructorTest {
     @DisplayName("Проверка перехода из личного кабинета в конструктор по клику на логотип")
     public void goToConstructorFromLogoButtonTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);

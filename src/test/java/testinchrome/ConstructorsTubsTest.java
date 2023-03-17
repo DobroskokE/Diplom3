@@ -8,24 +8,27 @@ import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.concurrent.TimeUnit;
+
+import static property.Property.*;
 
 public class ConstructorsTubsTest {
     private WebDriver driver;
 
     @Before
     public void setUp() {
-        //драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.chrome,driver", driverPath);
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
     @DisplayName("Проверка перехода к разделу Булки")
     public void bunsTubTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -44,7 +47,7 @@ public class ConstructorsTubsTest {
     @DisplayName("Проверка перехода к разделу Соусы")
     public void saucesTubTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -60,7 +63,7 @@ public class ConstructorsTubsTest {
     @DisplayName("Проверка перехода к разделу Начинки")
     public void fillingsTubTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);

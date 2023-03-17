@@ -12,6 +12,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import com.github.javafaker.Faker;
 
+import java.util.concurrent.TimeUnit;
+
+import static property.Property.driverPath;
+import static property.Property.url;
+
 public class RegistrationTest {
     private WebDriver driver;
 
@@ -23,17 +28,17 @@ public class RegistrationTest {
 
     @Before
     public void setUp() {
-        //драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.chrome,driver", driverPath);
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
     @DisplayName("Проверка успешной регистрации")
     public void successfulRegistrationTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
@@ -70,7 +75,7 @@ public class RegistrationTest {
     @DisplayName("Проверка контроля неверного пароля")
     public void wrongPasswordTest() {
         // перешли на страницу тестового приложения
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(url);
 
         //объект класса главной страницы
         MainPage objMainPage = new MainPage(driver);
