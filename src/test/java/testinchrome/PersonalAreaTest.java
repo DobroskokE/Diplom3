@@ -1,0 +1,53 @@
+package testinchrome;
+
+import apistellarburgers.DeleteUser;
+import io.qameta.allure.junit4.DisplayName;
+import org.junit.After;
+import org.junit.Before;
+import pageobject.LoginPage;
+import pageobject.MainPage;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.concurrent.TimeUnit;
+
+import static property.Property.driverPath;
+import static property.Property.url;
+
+public class PersonalAreaTest {
+    private WebDriver driver;
+
+    @Before
+    public void setUp() {
+        System.setProperty("webdriver.chrome,driver", driverPath);
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    }
+
+    @Test
+    @DisplayName("Проверка перехода по клику на «Личный кабинет»")
+    public void goToPersonalAreaTest() {
+        // перешли на страницу тестового приложения
+        driver.get(url);
+
+        //объект класса главной страницы
+        MainPage objMainPage = new MainPage(driver);
+
+        // клик на кнопку Личный кабинет
+        objMainPage.clickPersonalAreaButton();
+
+        //объект класса перехода на страницу логин
+        LoginPage objLoginPage = new LoginPage(driver);
+
+        //Проверка заголовка Вход
+        objLoginPage.enterHeaderCheck();
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
+}
